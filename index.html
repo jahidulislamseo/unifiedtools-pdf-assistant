@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>UnifiedTools Pro PDF Assistant — Clean Webpage-to-PDF & Document Extension</title>
+  <meta name="description" content="Convert webpages to clean print PDFs, extract document text, and bridge local files to UnifiedTools Pro with this open-source Manifest V3 Chrome extension.">
+  <meta name="keywords" content="PDF assistant Chrome extension, webpage to PDF converter, Manifest V3 PDF extension, clean print PDF tool, browser document workflow">
+  <meta name="author" content="Jahidul Islam">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="UnifiedTools Pro PDF Assistant">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/">
+  <meta property="og:title" content="UnifiedTools Pro PDF Assistant — Clean Webpage-to-PDF & Document Extension">
+  <meta property="og:description" content="Open-source Manifest V3 Chrome extension to export clutter-free PDFs, extract text, and bridge local documents without cloud upload.">
+  <meta property="og:image" content="https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/icons/icon128.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UnifiedTools Pro PDF Assistant">
+  <meta name="twitter:description" content="Convert webpages to clean print PDFs and route documents locally with zero cloud telemetry.">
+  <meta name="twitter:image" content="https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/icons/icon128.png">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/icon48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png">
+  <link rel="apple-touch-icon" href="icons/icon128.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/#website",
+        "url": "https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/",
+        "name": "UnifiedTools Pro PDF Assistant",
+        "publisher": {
+          "@type": "Person",
+          "name": "Jahidul Islam"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/#app",
+        "name": "UnifiedTools Pro PDF Assistant",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "Chromium, Google Chrome, Brave, Microsoft Edge",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Open-source Manifest V3 Chrome extension to strip webpage clutter for PDF export, process context menu shortcuts, and bridge local documents to UnifiedTools Pro.",
+        "softwareVersion": "1.0.0",
+        "author": {
+          "@type": "Person",
+          "name": "Jahidul Islam"
+        },
+        "license": "https://opensource.org/licenses/MIT"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://jahidulislamseo.github.io/unifiedtools-pdf-assistant/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does this extension upload my PDF files to an external server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The extension operates with zero telemetry. Webpage print-to-PDF is executed locally by injecting clean print styles directly into your browser tab."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the clean print-to-PDF feature work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It injects a targeted stylesheet matching navigation bars, sticky headers, sidebar ads, and cookie banners to suppress them during browser print rendering, then triggers window.print()."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which browsers are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All Chromium-based browsers with Manifest V3 support, including Google Chrome 102+, Brave, Microsoft Edge, Opera, and Vivaldi."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #0f1624;
+      --bg-surface-elevated: #162032;
+      --bg-surface-border: rgba(255, 255, 255, 0.08);
+      
+      --accent-primary: #ef4444;
+      --accent-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #f59e0b 100%);
+      --accent-glow: rgba(239, 68, 68, 0.25);
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Plus Jakarta Sans', var(--font-body);
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Gradients */
+    .ambient-glow-1 {
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 450px;
+      background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.14), transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ambient-glow-2 {
+      position: fixed;
+      bottom: 10%;
+      right: -100px;
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.08), transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Top Grid Overlay */
+    .grid-pattern {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Navigation */
+    .site-header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.75);
+      border-bottom: 1px solid var(--bg-surface-border);
+      z-index: 100;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: #f87171;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .header-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-icon-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-surface-border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .btn-icon-link:hover {
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: var(--accent-gradient);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--accent-glow);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 80px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: var(--radius-full);
+      color: #f87171;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      margin-bottom: 20px;
+    }
+
+    .text-gradient {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.12rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--bg-surface-border);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Extension Interactive Mockup */
+    .mockup-wrapper {
+      position: relative;
+    }
+
+    .mockup-glow {
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle at center, rgba(239, 68, 68, 0.2), transparent 70%);
+      filter: blur(30px);
+      z-index: 0;
+    }
+
+    .extension-window {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      background: #0d131f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+
+    .ext-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #131b2c;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ext-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ext-brand img {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+    }
+
+    .ext-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ext-brand-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .ext-brand-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .ext-tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    .ext-mini-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .ext-mini-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .ext-body {
+      padding: 16px;
+    }
+
+    .ext-action-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(245, 158, 11, 0.1));
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .ext-action-card:hover {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.18));
+      transform: translateY(-1px);
+    }
+
+    .ext-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .ext-card-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .ext-card-desc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .ext-dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      padding: 20px 14px;
+      text-align: center;
+      margin-bottom: 14px;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .ext-dropzone:hover, .ext-dropzone.active {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .ext-drop-icon {
+      width: 28px;
+      height: 28px;
+      color: #f87171;
+      margin-bottom: 6px;
+    }
+
+    .ext-drop-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .ext-drop-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .ext-section-header {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .ext-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .ext-grid-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .ext-grid-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .ext-grid-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+    }
+
+    .ext-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      background: #090e18;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* Live Simulation Feedback Toast */
+    #demoToast {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      padding: 8px 16px;
+      background: #10b981;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    #demoToast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Feature Grid Section */
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 56px;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #f87171;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-surface-border);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(239, 68, 68, 0.35);
+      background: var(--bg-surface-elevated);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f87171;
+      margin-bottom: 20px;
+    }
+
+    .feature-card-title {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.015em;
+    }
+
+    .feature-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .feature-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Context Menus Showcase */
+    .context-showcase {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, #0c121e 100%);
+      border: 1px solid var(--bg-surface-border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .context-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .context-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .context-menu-item strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .context-tag {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border-radius: 4px;
+    }
+
+    /* Technical Specifications Table */
+    .specs-table-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-surface-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 32px;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .specs-table th {
+      background: var(--bg-surface-elevated);
+      padding: 16px 24px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--bg-surface-border);
+    }
+
+    .specs-table td {
+      padding: 18px 24px;
+      font-size: 0.92rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+    }
+
+    .specs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .specs-table td strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .specs-mono {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: #f87171;
+    }
+
+    /* Installation Code Terminal */
+    .terminal-card {
+      background: #080c14;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-copy-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .terminal-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: #e2e8f0;
+      overflow-x: auto;
+    }
+
+    .terminal-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .t-prompt {
+      color: #ef4444;
+      user-select: none;
+      font-weight: 700;
+    }
+
+    .t-comment {
+      color: #64748b;
+    }
+
+    .t-cmd {
+      color: #38bdf8;
+    }
+
+    /* FAQ Section */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-surface-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item.active {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .faq-toggle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+      color: #ef4444;
+    }
+
+    .faq-answer {
+      padding: 0 24px 20px;
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* CTA Bottom Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(245, 158, 11, 0.08) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 64px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner h2 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+
+    .cta-banner p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--bg-surface-border);
+      padding: 56px 0 36px;
+      background: #060910;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: var(--transition);
+    }
+
+    .footer-col-links a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 48px;
+      }
+      .hero-eyebrow {
+        margin: 0 auto 24px;
+      }
+      .hero-description {
+        margin: 0 auto 32px;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-stats {
+        justify-content: center;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .context-showcase {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-title {
+        font-size: 2.3rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+  <div class="grid-pattern"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="#" class="brand-group">
+        <img src="icons/icon48.png" class="brand-logo" alt="UnifiedTools Pro Logo" />
+        <div class="brand-info">
+          <span class="brand-name">UnifiedTools Pro</span>
+          <span class="brand-badge">PDF Assistant · MV3</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features" class="nav-link">Core Features</a></li>
+        <li><a href="#demo" class="nav-link">Interactive Popup</a></li>
+        <li><a href="#architecture" class="nav-link">Architecture</a></li>
+        <li><a href="#installation" class="nav-link">Install Guide</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+
+      <div class="header-cta-group">
+        <a href="https://github.com/jahidulislamseo/unifiedtools-pdf-assistant" target="_blank" rel="noopener noreferrer" class="btn-icon-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Star on GitHub</span>
+        </a>
+        <a href="#installation" class="btn-primary">
+          <span>Get Extension</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span>⚡ Manifest V3 Open-Source Extension</span>
+        </div>
+        <h1 class="hero-title">
+          Clean Webpage-to-PDF &amp; <span class="text-gradient">Local Document</span> Assistant
+        </h1>
+        <p class="hero-description">
+          Eliminate headers, sidebars, cookie banners, and ad units from saved PDFs. Seamlessly bridge dropped documents into UnifiedTools Pro editing suites using zero-telemetry local execution.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#installation" class="btn-primary" style="padding: 12px 24px; font-size: 0.96rem;">
+            <span>Install Extension (Source)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          </a>
+          <a href="#demo" class="btn-icon-link" style="padding: 12px 20px; font-size: 0.94rem;">
+            <span>Try Live Simulator</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">0 KB</span>
+            <span class="stat-label">Cloud Telemetry</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">10+</span>
+            <span class="stat-label">Context Menus</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Client-Side Logic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Extension Simulator -->
+      <div class="mockup-wrapper" id="demo">
+        <div class="mockup-glow"></div>
+        <div class="extension-window">
+          <!-- Mockup Header -->
+          <div class="ext-header">
+            <div class="ext-brand">
+              <img src="icons/icon48.png" alt="UnifiedTools Icon" />
+              <div class="ext-brand-text">
+                <span class="ext-brand-title">UnifiedTools Pro</span>
+                <span class="ext-brand-sub">PDF &amp; Document Assistant</span>
+              </div>
+            </div>
+            <div class="ext-tools">
+              <button class="ext-mini-btn" id="demoAboutBtn" title="About">ℹ️</button>
+              <button class="ext-mini-btn" id="demoSettingsBtn" title="Settings">⚙️</button>
+            </div>
+          </div>
+
+          <!-- Mockup Body -->
+          <div class="ext-body">
+            <!-- Save Webpage to PDF Button -->
+            <div class="ext-action-card" id="demoPrintBtn">
+              <div class="ext-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              </div>
+              <div>
+                <div class="ext-card-title">Save Webpage to PDF</div>
+                <div class="ext-card-desc">Print tab with ads, nav, &amp; cookies removed</div>
+              </div>
+              <span style="margin-left: auto; color: #f87171; font-size: 1.1rem;">➜</span>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="ext-dropzone" id="demoDropzone">
+              <svg class="ext-drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <div class="ext-drop-title">Drag &amp; Drop PDF or Document here</div>
+              <div class="ext-drop-sub">Click to simulate document upload</div>
+            </div>
+
+            <div class="ext-section-header">⚡ Quick Web Tools</div>
+
+            <div class="ext-grid">
+              <a href="https://unifiedtoolspro.xyz/tools/pdf-to-text" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+                <span>PDF to Text</span>
+              </a>
+              <a href="https://unifiedtoolspro.xyz/tools/pdf/jpg-to-pdf" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>JPG to PDF</span>
+              </a>
+              <a href="https://unifiedtoolspro.xyz/tools/seo/word-counter" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"/></svg>
+                <span>Word Counter</span>
+              </a>
+              <a href="https://unifiedtoolspro.xyz/tools/pdf/editor" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                <span>PDF Editor</span>
+              </a>
+              <a href="https://unifiedtoolspro.xyz/tools/pdf/merger" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                <span>PDF Merger</span>
+              </a>
+              <a href="https://unifiedtoolspro.xyz" target="_blank" rel="noopener" class="ext-grid-item">
+                <svg class="ext-grid-icon" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span>101+ Tools</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="ext-footer">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Runs locally · Zero Telemetry Data</span>
+          </div>
+
+          <div id="demoToast">⚡ Clean print stylesheet injected!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Breakdown Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">High-Performance Workflow</span>
+        <h2 class="section-title">Engineered for Frictionless Document Handling</h2>
+        <p class="section-subtitle">
+          Standard browser printing and web conversions waste minutes cleaning formatting. UnifiedTools Pro executes directly on the DOM and passes local files via secure memory buffers.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          </div>
+          <h3 class="feature-card-title">Clean Print-to-PDF Engine</h3>
+          <p class="feature-card-desc">
+            Temporarily injects a targeted stylesheet to suppress headers, navigation bars, cookie notices, and sidebar ads before launching the native browser print spooler.
+          </p>
+          <span class="feature-tag">DOM Ingestion · Automatic Cleanup</span>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h3 class="feature-card-title">Drag &amp; Drop Auto-Bridge</h3>
+          <p class="feature-card-desc">
+            Drop PDFs, Word documents, or images into the extension popup. The background script converts them to Base64 buffers and dispatches them straight into the browser editor.
+          </p>
+          <span class="feature-tag">Base64 DataTransfer · Zero Cloud Upload</span>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="feature-card-title">Strict Local Privacy</h3>
+          <p class="feature-card-desc">
+            Contains zero Google Analytics, tracking beacons, or account lock-ins. All file routing operates inside ephemeral browser tabs under user supervision.
+          </p>
+          <span class="feature-tag">100% Client-Side · W3C Compliant</span>
+        </div>
+      </div>
+
+      <!-- Right Click Showcase -->
+      <div class="context-showcase">
+        <div>
+          <span class="section-tag">Context Menu Ecosystem</span>
+          <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 16px; font-weight: 800;">
+            10 Document Shortcuts Right From Your Mouse
+          </h3>
+          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px;">
+            Highlight any paragraph or right-click any PDF link on the internet. The extension's background service worker parses the URL or text selection and passes it directly to analysis endpoints on UnifiedTools Pro.
+          </p>
+          <div style="display: flex; gap: 12px;">
+            <span class="context-tag" style="background: rgba(16, 185, 129, 0.1); color: #34d399;">Active Context Detection</span>
+            <span class="context-tag" style="background: rgba(59, 130, 246, 0.1); color: #60a5fa;">URI-Encoded Dispatch</span>
+          </div>
+        </div>
+
+        <ul class="context-menu-list">
+          <li class="context-menu-item">
+            <span>📝</span>
+            <div><strong>Count Words &amp; Analyze Text</strong> (on highlighted selection)</div>
+            <span class="context-tag">Text Tool</span>
+          </li>
+          <li class="context-menu-item">
+            <span>📄</span>
+            <div><strong>Extract Text from PDF Link</strong> (without downloading file)</div>
+            <span class="context-tag">Link Tool</span>
+          </li>
+          <li class="context-menu-item">
+            <span>🗜️</span>
+            <div><strong>Compress PDF Link</strong> (direct optimization pipeline)</div>
+            <span class="context-tag">Optimization</span>
+          </li>
+          <li class="context-menu-item">
+            <span>🔓</span>
+            <div><strong>Unlock PDF</strong> (decrypt password-protected PDF URLs)</div>
+            <span class="context-tag">Security</span>
+          </li>
+          <li class="context-menu-item">
+            <span>🖼️</span>
+            <div><strong>Convert Image Format</strong> (right-click any web photo)</div>
+            <span class="context-tag">Image Bridge</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Specs Table -->
+  <section class="section" id="architecture" style="background: rgba(15, 22, 36, 0.3);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">System Architecture</span>
+        <h2 class="section-title">Technical Specifications &amp; Compliance</h2>
+        <p class="section-subtitle">
+          Engineered to satisfy Google Chrome Manifest V3 security standards and strict enterprise sandbox isolation.
+        </p>
+      </div>
+
+      <div class="specs-table-wrap">
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Architecture Module</th>
+              <th>Implementation Details</th>
+              <th>Protocol Standard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Manifest Version</strong></td>
+              <td>Manifest V3 with modular ES background service worker</td>
+              <td><span class="specs-mono">Chrome Extensions MV3</span></td>
+            </tr>
+            <tr>
+              <td><strong>Host Permissions</strong></td>
+              <td>Ephemeral tab injection via activeTab; no background browsing capture</td>
+              <td><span class="specs-mono">activeTab Scope</span></td>
+            </tr>
+            <tr>
+              <td><strong>Script Injections</strong></td>
+              <td>CSS rules injected via chrome.scripting.executeScript with auto unmount</td>
+              <td><span class="specs-mono">W3C Paged Media CSS</span></td>
+            </tr>
+            <tr>
+              <td><strong>Binary Transmission</strong></td>
+              <td>Cross-origin file array buffer fetching via background worker bridge</td>
+              <td><span class="specs-mono">Base64 / ArrayBuffer</span></td>
+            </tr>
+            <tr>
+              <td><strong>Target Environment</strong></td>
+              <td>Chromium 102+ (Google Chrome, Brave, Microsoft Edge, Opera)</td>
+              <td><span class="specs-mono">Chromium Core</span></td>
+            </tr>
+            <tr>
+              <td><strong>License &amp; Source</strong></td>
+              <td>100% Free Open Source Software under MIT License</td>
+              <td><span class="specs-mono">MIT License</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation Guide -->
+  <section class="section" id="installation">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Deployment Guide</span>
+        <h2 class="section-title">Install from Source in 60 Seconds</h2>
+        <p class="section-subtitle">
+          Load directly into your browser with zero compile step or external Node.js dependencies.
+        </p>
+      </div>
+
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">bash — developer setup</span>
+          <button class="terminal-copy-btn" id="btnCopyCommands">Copy All</button>
+        </div>
+        <div class="terminal-body" id="codeBlock">
+          <div class="terminal-line"><span class="t-comment"># 1. Clone the repository to your local drive</span></div>
+          <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">git clone https://github.com/jahidulislamseo/unifiedtools-pdf-assistant.git</span></div>
+          <br>
+          <div class="terminal-line"><span class="t-comment"># 2. Open Google Chrome or Brave Extensions Manager</span></div>
+          <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">open -a "Google Chrome" chrome://extensions</span></div>
+          <br>
+          <div class="terminal-line"><span class="t-comment"># 3. Toggle ON [Developer mode] in the top-right corner</span></div>
+          <div class="terminal-line"><span class="t-comment"># 4. Click [Load unpacked] and select the cloned folder:</span></div>
+          <div class="terminal-line"><span class="t-prompt">➜</span> <span class="t-cmd">Select: /path/to/unifiedtools-pdf-assistant</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Frequently Asked Questions</span>
+        <h2 class="section-title">Everything You Need to Know</h2>
+        <p class="section-subtitle">Got questions regarding security, document storage, or permissions? Here are direct answers.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item active">
+          <div class="faq-question">
+            <span>Does this extension upload or read my sensitive documents?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            No. The extension operates entirely within your browser runtime. The clean webpage-to-PDF tool uses native browser printing mechanisms, and drag-and-drop transfers pass files in-memory to client utilities on UnifiedTools Pro without intermediate telemetry servers.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the clean webpage-to-PDF export differ from Chrome's print button?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Standard Chrome print preserves sticky headers, video popups, sidebar banner ads, and cookie notices. UnifiedTools Pro PDF Assistant injects targeted CSS that hides all ad selectors and navigation wrappers before the print preview opens, yielding a clean document.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I customize the subfolder where documents are organized?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes. The built-in Settings panel allows you to configure default export subfolders, toggle dark/light themes, and selectively enable or disable specific context menu items.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is this extension free and open source?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, it is 100% free, open-source under the MIT license, and maintained on GitHub. You are free to inspect the source code, fork it, or build custom extensions on top of it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Streamline Your Document Workflow Today</h2>
+        <p>
+          Clean print web pages, extract text with one right-click, and bridge files to professional PDF utilities with zero tracking.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://github.com/jahidulislamseo/unifiedtools-pdf-assistant" target="_blank" rel="noopener" class="btn-primary" style="padding: 12px 28px; font-size: 0.96rem;">
+            <span>View Source on GitHub</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://unifiedtoolspro.xyz" target="_blank" rel="noopener" class="btn-icon-link" style="padding: 12px 24px; font-size: 0.96rem;">
+            <span>Explore 101+ Web Tools</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-group" style="margin-bottom: 14px;">
+            <img src="icons/icon48.png" class="brand-logo" alt="UnifiedTools Pro Logo" />
+            <div class="brand-info">
+              <span class="brand-name">UnifiedTools Pro</span>
+              <span class="brand-badge">PDF Assistant</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            Productivity-focused Chromium browser extension engineered for clean document export and deep integration with UnifiedTools Pro utilities.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Extension Links</div>
+          <ul class="footer-col-links">
+            <li><a href="#features">Core Features</a></li>
+            <li><a href="#architecture">Architecture Specs</a></li>
+            <li><a href="#installation">Developer Install</a></li>
+            <li><a href="PRIVACY.md">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Online Tools</div>
+          <ul class="footer-col-links">
+            <li><a href="https://unifiedtoolspro.xyz/tools/pdf/editor" target="_blank">PDF Editor</a></li>
+            <li><a href="https://unifiedtoolspro.xyz/tools/pdf/merger" target="_blank">PDF Merger</a></li>
+            <li><a href="https://unifiedtoolspro.xyz/tools/pdf-to-text" target="_blank">PDF to Text</a></li>
+            <li><a href="https://unifiedtoolspro.xyz/tools/seo/word-counter" target="_blank">Word Counter</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Developer</div>
+          <ul class="footer-col-links">
+            <li><a href="https://github.com/jahidulislamseo" target="_blank">Jahidul Islam (GitHub)</a></li>
+            <li><a href="https://github.com/jahidulislamseo/unifiedtools-pdf-assistant" target="_blank">Repository</a></li>
+            <li><a href="https://github.com/jahidulislamseo/unifiedtools-pdf-assistant/issues" target="_blank">Issue Tracker</a></li>
+            <li><a href="https://unifiedtoolspro.xyz" target="_blank">UnifiedTools Pro</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 UnifiedTools Pro. Developed by <a href="https://github.com/jahidulislamseo" target="_blank" style="color: #f87171; text-decoration: none;">Jahidul Islam</a>. Released under the MIT License.
+        </div>
+        <div>
+          Manifest V3 · Local In-Memory Buffer · 0 Trackers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Copy installation commands
+    const btnCopy = document.getElementById('btnCopyCommands');
+    if (btnCopy) {
+      btnCopy.addEventListener('click', () => {
+        const text = `git clone https://github.com/jahidulislamseo/unifiedtools-pdf-assistant.git
+open -a "Google Chrome" chrome://extensions`;
+        navigator.clipboard.writeText(text).then(() => {
+          btnCopy.textContent = 'Copied!';
+          setTimeout(() => btnCopy.textContent = 'Copy All', 2000);
+        });
+      });
+    }
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const parent = q.parentElement;
+        const isActive = parent.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+        if (!isActive) {
+          parent.classList.add('active');
+        }
+      });
+    });
+
+    // Interactive Demo Simulation Toast
+    const demoToast = document.getElementById('demoToast');
+    function showToast(msg) {
+      if (!demoToast) return;
+      demoToast.textContent = msg;
+      demoToast.classList.add('show');
+      setTimeout(() => demoToast.classList.remove('show'), 2500);
+    }
+
+    const demoPrintBtn = document.getElementById('demoPrintBtn');
+    if (demoPrintBtn) {
+      demoPrintBtn.addEventListener('click', () => {
+        showToast('📄 Ad & Nav filters injected! Print preview fired.');
+      });
+    }
+
+    const demoDropzone = document.getElementById('demoDropzone');
+    if (demoDropzone) {
+      demoDropzone.addEventListener('click', () => {
+        showToast('📥 File received! Simulated DataTransfer to PDF Editor.');
+      });
+    }
+
+    const demoSettingsBtn = document.getElementById('demoSettingsBtn');
+    if (demoSettingsBtn) {
+      demoSettingsBtn.addEventListener('click', () => {
+        showToast('⚙️ Settings Drawer toggled (Dark/Light & Menus).');
+      });
+    }
+
+    const demoAboutBtn = document.getElementById('demoAboutBtn');
+    if (demoAboutBtn) {
+      demoAboutBtn.addEventListener('click', () => {
+        showToast('ℹ️ UnifiedTools Pro PDF Assistant v1.0.0 (MV3).');
+      });
+    }
+  </script>
+</body>
+</html>
