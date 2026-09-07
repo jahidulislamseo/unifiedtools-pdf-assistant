@@ -18,3 +18,4 @@ Thumbs.db
 # Build artifacts
 *.zip
 *.crx
+!unifiedtools-pdf-assistant-v1.0.0.zip
